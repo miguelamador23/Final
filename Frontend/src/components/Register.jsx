@@ -5,10 +5,28 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        console.log('Usuario registrado exitosamente');
+        // Aquí puedes redirigir al usuario a una página de inicio de sesión u otra página
+      } else {
+        console.error('Error al registrar usuario');
+        // Aquí puedes manejar el error de acuerdo a tus necesidades
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

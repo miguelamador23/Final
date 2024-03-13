@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\paginas;
+use App\Models\Paginas;
 use Illuminate\Http\Request;
 
 class PaginasController extends Controller
@@ -12,7 +12,8 @@ class PaginasController extends Controller
      */
     public function index()
     {
-        //
+        $paginas = Paginas::all();
+        return response()->json($paginas);
     }
 
     /**
@@ -20,7 +21,7 @@ class PaginasController extends Controller
      */
     public function create()
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para crear una nueva página
     }
 
     /**
@@ -28,38 +29,52 @@ class PaginasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        Paginas::create($request->all());
+
+        return response()->json(['message' => 'Página creada exitosamente']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(paginas $paginas)
+    public function show(Paginas $paginas)
     {
-        //
+        return response()->json($paginas);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(paginas $paginas)
+    public function edit(Paginas $paginas)
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para editar una página
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, paginas $paginas)
+    public function update(Request $request, Paginas $paginas)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        $paginas->update($request->all());
+
+        return response()->json(['message' => 'Página actualizada exitosamente']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(paginas $paginas)
+    public function destroy(Paginas $paginas)
     {
-        //
+        $paginas->delete();
+
+        return response()->json(['message' => 'Página eliminada exitosamente']);
     }
 }

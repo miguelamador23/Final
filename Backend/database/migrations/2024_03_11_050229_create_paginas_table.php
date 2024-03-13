@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +12,15 @@ return new class extends Migration
     {
         Schema::create('paginas', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('fechacreacion')->nullable();
+            $table->timestamp('fechamodificacion')->nullable();
+            $table->string('usuariomodificacion');
+            $table->string('url');
+            $table->string('estado');
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->string('icono');
+            $table->string('tipo');
             $table->timestamps();
         });
     }

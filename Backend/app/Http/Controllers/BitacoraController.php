@@ -12,7 +12,8 @@ class BitacoraController extends Controller
      */
     public function index()
     {
-        //
+        $bitacoras = Bitacora::all();
+        return response()->json($bitacoras);
     }
 
     /**
@@ -20,7 +21,7 @@ class BitacoraController extends Controller
      */
     public function create()
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para crear una nueva bitácora
     }
 
     /**
@@ -28,7 +29,13 @@ class BitacoraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        Bitacora::create($request->all());
+
+        return response()->json(['message' => 'Bitácora creada exitosamente']);
     }
 
     /**
@@ -36,7 +43,7 @@ class BitacoraController extends Controller
      */
     public function show(Bitacora $bitacora)
     {
-        //
+        return response()->json($bitacora);
     }
 
     /**
@@ -44,7 +51,7 @@ class BitacoraController extends Controller
      */
     public function edit(Bitacora $bitacora)
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para editar una bitácora
     }
 
     /**
@@ -52,7 +59,13 @@ class BitacoraController extends Controller
      */
     public function update(Request $request, Bitacora $bitacora)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        $bitacora->update($request->all());
+
+        return response()->json(['message' => 'Bitácora actualizada exitosamente']);
     }
 
     /**
@@ -60,6 +73,8 @@ class BitacoraController extends Controller
      */
     public function destroy(Bitacora $bitacora)
     {
-        //
+        $bitacora->delete();
+
+        return response()->json(['message' => 'Bitácora eliminada exitosamente']);
     }
 }

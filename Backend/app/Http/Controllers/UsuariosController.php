@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\usuarios;
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
@@ -12,7 +12,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuarios::all();
+        return response()->json($usuarios);
     }
 
     /**
@@ -20,7 +21,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return view('usuarios.create');
     }
 
     /**
@@ -28,38 +29,55 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí
+        ]);
+
+        Usuarios::create($request->all());
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(usuarios $usuarios)
+    public function show(Usuarios $usuarios)
     {
-        //
+        return response()->json($usuarios);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(usuarios $usuarios)
+    public function edit(Usuarios $usuarios)
     {
-        //
+        return view('usuarios.edit', compact('usuarios'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, usuarios $usuarios)
+    public function update(Request $request, Usuarios $usuarios)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí
+        ]);
+
+        $usuarios->update($request->all());
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(usuarios $usuarios)
+    public function destroy(Usuarios $usuarios)
     {
-        //
+        $usuarios->delete();
+
+        return redirect()->route('usuarios.index')
+            ->with('success', 'Usuario eliminado exitosamente.');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\enlaces;
+use App\Models\Enlaces;
 use Illuminate\Http\Request;
 
 class EnlacesController extends Controller
@@ -12,7 +12,8 @@ class EnlacesController extends Controller
      */
     public function index()
     {
-        //
+        $enlaces = Enlaces::all();
+        return response()->json($enlaces);
     }
 
     /**
@@ -20,7 +21,7 @@ class EnlacesController extends Controller
      */
     public function create()
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para crear un nuevo enlace
     }
 
     /**
@@ -28,38 +29,52 @@ class EnlacesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        Enlaces::create($request->all());
+
+        return response()->json(['message' => 'Enlace creado exitosamente']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(enlaces $enlaces)
+    public function show(Enlaces $enlaces)
     {
-        //
+        return response()->json($enlaces);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(enlaces $enlaces)
+    public function edit(Enlaces $enlaces)
     {
-        //
+        // Implementa tu propia lógica aquí si necesitas una vista para editar un enlace
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, enlaces $enlaces)
+    public function update(Request $request, Enlaces $enlaces)
     {
-        //
+        $request->validate([
+            // Define las reglas de validación aquí si es necesario
+        ]);
+
+        $enlaces->update($request->all());
+
+        return response()->json(['message' => 'Enlace actualizado exitosamente']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(enlaces $enlaces)
+    public function destroy(Enlaces $enlaces)
     {
-        //
+        $enlaces->delete();
+
+        return response()->json(['message' => 'Enlace eliminado exitosamente']);
     }
 }
