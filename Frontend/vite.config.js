@@ -1,16 +1,9 @@
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [
-    react()
-  ],
+  plugins: [react()],
   resolve: {
-    alias: {
-      '@mui/material': '@mui/material',
-      '@mui/styled-engine': '@mui/styled-engine',
-      '@emotion/react': 'react',
-      '@emotion/styled': '@emotion/styled'
-    },
+    alias: [{ find: "@", replacement: "/src" }],
   },
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuarios::all();
+        $usuarios = Usuario::all();
         return response()->json($usuarios);
     }
 
@@ -28,21 +29,22 @@ class UsuariosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            // Define las reglas de validación aquí
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email|unique:usuarios',
+        'password' => 'required|min:6',
+    ]);
 
-        Usuarios::create($request->all());
+    Usuario::create($request->only(['email', 'password']));
 
-        return redirect()->route('usuarios.index')
-            ->with('success', 'Usuario creado exitosamente.');
-    }
+    return redirect()->route('usuarios.index')
+        ->with('success', 'Usuario creado exitosamente.');
+}
 
     /**
      * Display the specified resource.
      */
-    public function show(Usuarios $usuarios)
+    public function show(Usuario $usuarios)
     {
         return response()->json($usuarios);
     }
@@ -50,7 +52,7 @@ class UsuariosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Usuarios $usuarios)
+    public function edit(Usuario $usuarios)
     {
         return view('usuarios.edit', compact('usuarios'));
     }
@@ -58,10 +60,12 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Usuarios $usuarios)
+    public function update(Request $request, Usuario $usuarios)
     {
         $request->validate([
-            // Define las reglas de validación aquí
+            'email' => 'required|email|unique:usuarios,email,' . $usuarios->id,
+            'password' => 'required|min:6',
+            // Agrega más reglas de validación según sea necesario
         ]);
 
         $usuarios->update($request->all());
@@ -73,7 +77,7 @@ class UsuariosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Usuarios $usuarios)
+    public function destroy(Usuario $usuarios)
     {
         $usuarios->delete();
 
