@@ -12,8 +12,7 @@ class BitacoraController extends Controller
      */
     public function index()
     {
-        $bitacoras = Bitacora::all();
-        return response()->json($bitacoras);
+        return Bitacora::all();
     }
 
     /**
@@ -21,7 +20,7 @@ class BitacoraController extends Controller
      */
     public function create()
     {
-        // Implementa tu propia lógica aquí si necesitas una vista para crear una nueva bitácora
+        //
     }
 
     /**
@@ -29,21 +28,25 @@ class BitacoraController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            // Define las reglas de validación aquí si es necesario
-        ]);
-
-        Bitacora::create($request->all());
-
-        return response()->json(['message' => 'Bitácora creada exitosamente']);
+        $bitacora = new Bitacora();
+        $bitacora -> bitacora = $request -> bitacora;
+        $bitacora -> id_usuario = $request -> id_usuario;
+        $bitacora -> usuario_email = $request -> usuario_email;
+        $bitacora -> fecha = $request -> fecha;
+        $bitacora -> hora = $request -> hora;
+        $bitacora -> save();
+        return "La bitacora se guardó correctamente.";
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Bitacora $bitacora)
+    public function show($id)
     {
-        return response()->json($bitacora);
+        //echo $id;
+        $id = Bitacora::find($id);
+        //$id = Bitacora::where('id_bitacora', $id)->first();
+        return $id;
     }
 
     /**
@@ -51,30 +54,34 @@ class BitacoraController extends Controller
      */
     public function edit(Bitacora $bitacora)
     {
-        // Implementa tu propia lógica aquí si necesitas una vista para editar una bitácora
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bitacora $bitacora)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            // Define las reglas de validación aquí si es necesario
-        ]);
-
-        $bitacora->update($request->all());
-
-        return response()->json(['message' => 'Bitácora actualizada exitosamente']);
+        //echo $id;
+        $bitacora = Bitacora::find($id);
+        //$bitacora = Bitacora::where('id_bitacora', $id)->first();
+        $bitacora -> bitacora = $request -> bitacora;
+        $bitacora -> id_usuario = $request -> id_usuario;
+        $bitacora -> usuario_email = $request -> usuario_email;
+        $bitacora -> fecha = $request -> fecha;
+        $bitacora -> hora = $request -> hora;
+        $bitacora -> save();
+        return "La bitacora se actualizó correctamente.";
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bitacora $bitacora)
+    public function destroy($id)
     {
-        $bitacora->delete();
-
-        return response()->json(['message' => 'Bitácora eliminada exitosamente']);
+        $bitacora = Bitacora::find($id);
+        //$bitacora = Bitacora::where('id_bitacora', $id)->first();
+        $bitacora -> delete();
+        return "La bitacora se eliminó correctamente.";
     }
 }
